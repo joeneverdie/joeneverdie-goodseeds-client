@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../../_services/token-storage.service';
 import { AlertService } from './../../_services/alert.service';
 import { AuthService } from './../../_services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private alterService: AlertService
+    private alterService: AlertService,
+    private tokenStorage: TokenStorageService
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +54,12 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (data) => {
           console.log(data);
-          localStorage.setItem('currentUser', JSON.stringify(data['accessToken']));
+          localStorage.setItem(
+            'currentUser',
+            JSON.stringify(data['accessToken'])
+          );
+          // this.tokenStorage.saveToken(data.accessToken);
+          // this.tokenStorage.saveUser(data);
         },
 
         complete: () => {

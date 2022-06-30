@@ -1,3 +1,4 @@
+import { AuthGuard } from './_guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,7 +22,7 @@ import { LayoutsModule } from './layouts/layouts.module';
     UsersModule,
     LayoutsModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
