@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
     });
 
-    this.authService.logout();
+    this.authService.logout(this.tokenStorage.getUserId());
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -53,13 +53,9 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: (data) => {
-          console.log(data);
-          localStorage.setItem(
-            'currentUser',
-            JSON.stringify(data['accessToken'])
-          );
-          // this.tokenStorage.saveToken(data.accessToken);
-          // this.tokenStorage.saveUser(data);
+           this.tokenStorage.saveToken(data['accessToken']);
+           this.tokenStorage.saveRefreshToken(data['refreshToken']);
+           this.tokenStorage.saveUser(data['username'], data['id']);
         },
 
         complete: () => {
